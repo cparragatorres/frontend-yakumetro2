@@ -1,0 +1,11 @@
+.contenedor {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.imagen {
+  width: 827px;
+  height: 500px;
+  object-fit: cover;
+}

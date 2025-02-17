@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./components/Header/Header";
 import Formulario from "./components/Formulario/Formulario";
+import InformacionAgua from "./components/InformacionAgua/InformacionAgua";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -8,6 +9,7 @@ const App: React.FC = () => {
     <div>
       <Header />
       <Formulario />
+      <InformacionAgua />
     </div>
   );
 };
