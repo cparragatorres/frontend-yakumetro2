@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #2D9CDB; /* Color celeste */
+  margin-top: 62px;
+  height: 210px;
+}
+
+.image {
+  height: 210px; /* Ajusta según necesites */
+}
