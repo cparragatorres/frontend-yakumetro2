@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Formulario.module.css";
 
-const Formulario: React.FC = () => {
+const Formulario: React.FC<{ onBuscar: () => void }> = ({ onBuscar }) => {
   const [departamento, setDepartamento] = useState("");
   const [eps, setEps] = useState("");
   const [numeroConexion, setNumeroConexion] = useState("");
@@ -78,7 +78,7 @@ const Formulario: React.FC = () => {
         </div>
       </div>
 
-      <button onClick={handleBuscar}>Buscar</button>
+      <button onClick={onBuscar}>Buscar</button>
 
       {/* Mostrar error debajo del botón */}
       {errorMensaje && <p className={styles.error}>{errorMensaje}</p>}
