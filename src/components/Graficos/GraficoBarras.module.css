@@ -1,0 +1,11 @@
+.contenedor {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.titulo {
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+}

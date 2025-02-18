@@ -1,5 +1,9 @@
 import React from "react";
 import styles from "./Resultados.module.css";
+import ConsumoMensual from "../Graficos/ConsumoMensual";
+import ConsumoManzana from "../Graficos/ConsumoManzana";
+import ConsumoDistrito from "../Graficos/ConsumoDistrito";
+import ConsumoSubsidio from "../Graficos/ConsumoSubsidio";
 
 const Resultados: React.FC<{ onVolver: () => void }> = ({ onVolver }) => {
   return (
@@ -10,6 +14,15 @@ const Resultados: React.FC<{ onVolver: () => void }> = ({ onVolver }) => {
         <div className={styles.dato}>Cuenta con medidor</div>
         <div className={styles.dato}>Sin subsidio</div>
       </div>
+
+      {/* Sección de gráficos */}
+      <div className={styles.graficos}>
+        <ConsumoMensual />
+        <ConsumoManzana />
+        <ConsumoDistrito />
+        <ConsumoSubsidio />
+      </div>
+
     </div>
   );
 };

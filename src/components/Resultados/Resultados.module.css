@@ -18,6 +18,7 @@
 .contenedorDatos {
   display: flex;
   gap: 20px;
+  margin-bottom: 30px;
 }
 
 .dato {
@@ -29,7 +30,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  place-items: center;
   text-align: center;
   line-height: 1.5;
+}
+
+.graficos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
