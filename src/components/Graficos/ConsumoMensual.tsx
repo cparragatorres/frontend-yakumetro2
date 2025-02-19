@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GraficoBarras from "./GraficoBarras";
 
 const datosMensuales = [
@@ -10,12 +10,17 @@ const datosMensuales = [
 ];
 
 const ConsumoMensual: React.FC = () => {
+  useEffect(() => {
+    console.log("Datos mensuales:", datosMensuales);
+    console.log("Promedios:", datosMensuales.map(d => d.promedio));
+  }, []);
+
   return (
     <GraficoBarras
       titulo="Consumo Mensual"
       datos={datosMensuales}
-      colorBarras="#0057FF"
-      colorLinea="#FF7300"
+      colorBarras="blue"
+      colorLinea="orange"
       keyBarras="consumo"
       keyLinea="promedio"
     />

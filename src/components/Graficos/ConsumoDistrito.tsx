@@ -14,8 +14,8 @@ const ConsumoDistrito: React.FC = () => {
     <GraficoBarras
       titulo="Consumo del Distrito"
       datos={datosDistrito}
-      colorBarras="#6A0DAD"
-      colorLinea="#FF7300"
+      colorBarras="purple"
+      colorLinea="orange"
       keyBarras="consumo"
       keyLinea="promedio"
     />

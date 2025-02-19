@@ -22,7 +22,6 @@ const Resultados: React.FC<{ onVolver: () => void }> = ({ onVolver }) => {
         <ConsumoDistrito />
         <ConsumoSubsidio />
       </div>
-
     </div>
   );
 };

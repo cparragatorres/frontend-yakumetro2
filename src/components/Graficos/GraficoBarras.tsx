@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  BarChart,
+  ComposedChart,
   Bar,
   XAxis,
   YAxis,
@@ -28,22 +28,25 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({ titulo, datos, colorBarra
       <h3 className={styles.titulo} style={{ backgroundColor: colorBarras }}>{titulo}</h3>
       <div className={styles.graficoContainer}>
         <ResponsiveContainer width="60%" height={300}>
-          <BarChart data={datos}>
+          <ComposedChart data={datos}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
             <YAxis />
             <Tooltip />
             <Legend />
-            {/* Línea de referencia para el promedio */}
-            <Line type="monotone" dataKey={keyLinea} stroke={colorLinea} strokeWidth={2} dot={false} />
+
             {/* Barras con etiquetas */}
-            <Bar dataKey={keyBarras} fill={colorBarras}>
+            <Bar dataKey={keyBarras} fill={colorBarras} >
               <LabelList dataKey={keyBarras} position="top" fontSize={14} fontWeight="bold" />
             </Bar>
-          </BarChart>
+
+            {/* Línea del promedio */}
+            <Line type="monotone" dataKey={keyLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 5 }}/>
+
+          </ComposedChart>
         </ResponsiveContainer>
 
-        {/* Imagen explicativa y texto */}
+        {/* Información adicional */}
         <div className={styles.infoContainer}>
           <div className={styles.imagenPlaceholder}></div>
           <p className={styles.textoInfo}>Tu consumo del último mes fue mayor al promedio</p>

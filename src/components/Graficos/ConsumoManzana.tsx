@@ -14,8 +14,8 @@ const ConsumoManzana: React.FC = () => {
     <GraficoBarras
       titulo="Consumo de la Manzana"
       datos={datosManzana}
-      colorBarras="#00A000"
-      colorLinea="#FF7300"
+      colorBarras="green"
+      colorLinea="orange"
       keyBarras="consumo"
       keyLinea="promedio"
     />
