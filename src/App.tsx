@@ -10,13 +10,19 @@ const App: React.FC = () => {
   const [buscando, setBuscando] = useState(false);
   const [mostrarResultados, setMostrarResultados] = useState(false);
 
-  const handleBuscar = () => {
+  const handleBuscar = (departamento: string, eps: string, numeroConexion: string) => {
+    console.log("Datos recibidos en App.tsx:");
+    console.log("Departamento:", departamento);
+    console.log("EPS:", eps);
+    console.log("Número de Conexión:", numeroConexion);
+
     setBuscando(true);
     setTimeout(() => {
       setBuscando(false);
       setMostrarResultados(true);
     }, 3000); // Simulamos 3 segundos de carga
   };
+
 
   return (
     <div>

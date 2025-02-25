@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./Formulario.module.css";
+import { on } from "events";
 
-const Formulario: React.FC<{ onBuscar: () => void }> = ({ onBuscar }) => {
+const Formulario: React.FC<{ onBuscar: (departamento: string, eps: string, numeroConexion: string) => void }> = ({ onBuscar }) => {
   const [departamento, setDepartamento] = useState("");
   const [eps, setEps] = useState("");
   const [numeroConexion, setNumeroConexion] = useState("");
@@ -43,6 +44,8 @@ const Formulario: React.FC<{ onBuscar: () => void }> = ({ onBuscar }) => {
       console.log("Departamento:", departamento);
       console.log("EPS:", eps);
       console.log("Número de Conexión:", numeroConexion);
+
+      onBuscar(departamento, eps, numeroConexion); // Ahora enviamos los datos a App.tsx
     }
   };
 
@@ -78,7 +81,7 @@ const Formulario: React.FC<{ onBuscar: () => void }> = ({ onBuscar }) => {
         </div>
       </div>
 
-      <button onClick={onBuscar}>Buscar</button>
+      <button onClick={handleBuscar}>Buscar</button>
 
       {/* Mostrar error debajo del botón */}
       {errorMensaje && <p className={styles.error}>{errorMensaje}</p>}
