@@ -23,7 +23,6 @@ const App: React.FC = () => {
     }, 3000); // Simulamos 3 segundos de carga
   };
 
-
   return (
     <div>
       <Header />
