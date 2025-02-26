@@ -7,16 +7,21 @@ import ConsumoSubsidio from "../Graficos/ConsumoSubsidio";
 interface ResultadosProps {
   onVolver: () => void;
   volumenFacturado: number | null; // Puede ser null mientras no haya datos
+  modalidadFacturacion: string | null;
 }
-const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado }) => {
+const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado, modalidadFacturacion }) => {
   return (
     <div className={styles.resultados}>
       <button className={styles.botonVolver} onClick={onVolver}>Volver</button>
       <div className={styles.contenedorDatos}>
         <div className={styles.dato}>
-          {volumenFacturado !== null ? `${volumenFacturado} m³ de consumo en el último mes` : "Cargando datos..."}
+          {volumenFacturado != null
+            ? `${volumenFacturado} m³ de consumo en el último mes`
+            : "No existe volumen facturado"}
         </div>
-        <div className={styles.dato}>Cuenta con medidor</div>
+        <div className={styles.dato}>
+          Modalidad de Facturación: {modalidadFacturacion?.trim() ? modalidadFacturacion : "..."}
+        </div>
         <div className={styles.dato}>Sin subsidio</div>
       </div>
 

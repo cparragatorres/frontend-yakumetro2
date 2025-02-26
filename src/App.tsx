@@ -1,46 +1,58 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Header from "./components/Header/Header";
 import Formulario from "./components/Formulario/Formulario";
 import InformacionAgua from "./components/InformacionAgua/InformacionAgua";
 import Resultados from "./components/Resultados/Resultados";
 import Buscando from "./components/Buscando/Buscando";
 import { obtenerVolumenFacturado } from "./services/volumenFacturadoService";
-import { VolumenFacturado } from "./models/VolumenFacturado";
+import { obtenerModalidadFacturacion } from "./services/modalidadFacturacionService";
 import "./App.css";
 
 const App: React.FC = () => {
   const [buscando, setBuscando] = useState(false);
   const [mostrarResultados, setMostrarResultados] = useState(false);
   const [volumenFacturado, setVolumenFacturado] = useState<number | null>(null);
+  const [modalidadFacturacion, setModalidadFacturacion] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // Nuevo estado para manejar errores
 
-  const handleBuscar = async(departamento: string, eps: string, numeroConexion: string) => {
+  const handleBuscar = async (departamento: string, eps: string, numeroConexion: string) => {
     console.log("Datos recibidos en App.tsx:", { departamento, eps, numeroConexion });
-
     setBuscando(true);
+    setError(null); // Reiniciar el estado de error antes de una nueva búsqueda
 
-    // Hacer la consulta a la API
-    const resultado: VolumenFacturado | null = await obtenerVolumenFacturado(numeroConexion);
+    try {
+      const [volumenFacturado, modalidadFacturacion] = await Promise.all([
+        obtenerVolumenFacturado(numeroConexion),
+        obtenerModalidadFacturacion(numeroConexion),
+      ]);
 
-    if (resultado) {
-      console.log("Datos obtenidos del volumen facturado:", resultado);
-      setVolumenFacturado(resultado.volumen_facturado);
-    }
+      setVolumenFacturado(volumenFacturado?.volumen_facturado ?? null);
+      setModalidadFacturacion(modalidadFacturacion?.modalidad_facturacion ?? null);
 
-    setTimeout(() => {
+    } catch (err) {
+      console.error("Error al obtener datos:", err);
+      setError("Ocurrió un error al obtener la información. Inténtalo de nuevo.");
+    } finally {
       setBuscando(false);
       setMostrarResultados(true);
-    }, 3000); // Simulamos 3 segundos de carga
+    }
   };
 
   return (
     <div>
       <Header />
-      {buscando ?
+      {buscando ? (
         <Buscando />
-       : mostrarResultados ? (
-         <Resultados onVolver={() => setMostrarResultados(false)} volumenFacturado={volumenFacturado} />
+      ) : mostrarResultados ? (
+        <Resultados
+          onVolver={() => setMostrarResultados(false)}
+          volumenFacturado={volumenFacturado}
+          modalidadFacturacion={modalidadFacturacion}
+        />
       ) : (
         <>
+          {error && <div className="error">{error}</div>}
+          {"Hubo un problema al obtener la información. Por favor, intenta nuevamente en unos minutos."}
           <Formulario onBuscar={handleBuscar} />
           <InformacionAgua />
         </>

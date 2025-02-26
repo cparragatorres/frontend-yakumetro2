@@ -1,5 +1,5 @@
 import axios from "axios";
-import { VolumenFacturado } from "../models/VolumenFacturado";
+import { VolumenFacturado } from "../models/VolumenFacturadoModels";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
