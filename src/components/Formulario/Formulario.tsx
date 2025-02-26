@@ -28,8 +28,8 @@ const Formulario: React.FC<{ onBuscar: (departamento: string, eps: string, numer
       return false;
     }
 
-    if (numeroConexion.length !== 8) {
-      setErrorMensaje("El número de conexión debe ser de 8 dígitos.");
+    if (numeroConexion.length !== 7) {
+      setErrorMensaje("El número de conexión debe ser de 7 dígitos.");
       return false;
     }
 
@@ -75,8 +75,8 @@ const Formulario: React.FC<{ onBuscar: (departamento: string, eps: string, numer
             type="text"
             value={numeroConexion}
             onChange={handleNumeroConexionChange}
-            placeholder="••••••••"
-            maxLength={8}
+            placeholder="•••••••"
+            maxLength={7}
           />
         </div>
       </div>

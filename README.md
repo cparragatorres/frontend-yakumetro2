@@ -20,10 +20,11 @@
 frontend/
 │── public/               # Archivos estáticos
 │── src/                  # Código fuente principal
+│   ├── assets/           # Imagenes y otros recursos
 │   ├── components/       # Componentes reutilizables
+│   ├── models/           # Modelos de datos para TypeScript
 │   ├── pages/            # Páginas principales
 │   ├── services/         # Llamadas a la API
-│   ├── styles/           # Estilos globales y específicos
 │   ├── App.tsx           # Componente principal
 │   ├── index.tsx         # Punto de entrada de la aplicación
 │── package.json          # Dependencias y scripts
