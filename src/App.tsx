@@ -7,6 +7,7 @@ import Buscando from "./components/Buscando/Buscando";
 import { obtenerVolumenFacturado } from "./services/volumenFacturadoService";
 import { obtenerModalidadFacturacion } from "./services/modalidadFacturacionService";
 import { obtenerSubsidioExiste } from "./services/subsidioExisteService";
+import { obtenerConsumoMensual }from "./services/consumoMensualService";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -16,11 +17,13 @@ const App: React.FC = () => {
   const [modalidadFacturacion, setModalidadFacturacion] = useState<string | null>(null);
   const [subsidioExiste, setSubsidioExiste] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null); // Nuevo estado para manejar errores
+  const [numeroConexion, setNumeroConexion] = useState<string>(""); // Añadimos el estado para el número de conexión
 
   const handleBuscar = async (departamento: string, eps: string, numeroConexion: string) => {
     console.log("Datos recibidos en App.tsx:", { departamento, eps, numeroConexion });
     setBuscando(true);
     setError(null); // Reiniciar el estado de error antes de una nueva búsqueda
+    setNumeroConexion(numeroConexion);
 
     try {
       const [volumenFacturado, modalidadFacturacion, subsidioExiste] = await Promise.all([
@@ -53,6 +56,7 @@ const App: React.FC = () => {
           volumenFacturado={volumenFacturado}
           modalidadFacturacion={modalidadFacturacion}
           subsidioExiste={subsidioExiste}
+          numeroConexion={numeroConexion}
         />
       ) : (
         <>

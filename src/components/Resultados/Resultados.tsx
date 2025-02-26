@@ -9,8 +9,15 @@ interface ResultadosProps {
   volumenFacturado: number | null; // Puede ser null mientras no haya datos
   modalidadFacturacion: string | null;
   subsidioExiste: number | null;
+  numeroConexion: string;
 }
-const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado, modalidadFacturacion, subsidioExiste }) => {
+const Resultados: React.FC<ResultadosProps> = ({
+  onVolver,
+  volumenFacturado,
+  modalidadFacturacion,
+  subsidioExiste,
+  numeroConexion,
+}) => {
   return (
     <div className={styles.resultados}>
       <button className={styles.botonVolver} onClick={onVolver}>Volver</button>
@@ -35,7 +42,7 @@ const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado, mod
 
       {/* Sección de gráficos */}
       <div className={styles.graficos}>
-        <ConsumoMensual />
+        <ConsumoMensual numeroConexion={numeroConexion}/>
         <ConsumoManzana />
         <ConsumoDistrito />
         <ConsumoSubsidio />
