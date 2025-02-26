@@ -1,12 +1,12 @@
 import axios from "axios";
-import { VolumenFacturadoModels } from "../models/VolumenFacturadoModels";
+import { SubsidioExisteModels } from "../models/SubsidioExisteModels";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const obtenerVolumenFacturado = async (numeroConexion: string): Promise<VolumenFacturadoModels | null> => {
+export const obtenerSubsidioExiste = async (numeroConexion: string): Promise<SubsidioExisteModels | null> => {
     try {
         console.log(`Consultando API con el número de conexión: ${numeroConexion}`);
-        const response = await axios.get<VolumenFacturadoModels>(`${API_URL}volumen-facturado/${numeroConexion}`);
+        const response = await axios.get<SubsidioExisteModels>(`${API_URL}subsidio-existe/${numeroConexion}`);
         console.log("Respuesta de la API:", response.data);
         return response.data;
     } catch (error) {

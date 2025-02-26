@@ -8,8 +8,9 @@ interface ResultadosProps {
   onVolver: () => void;
   volumenFacturado: number | null; // Puede ser null mientras no haya datos
   modalidadFacturacion: string | null;
+  subsidioExiste: number | null;
 }
-const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado, modalidadFacturacion }) => {
+const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado, modalidadFacturacion, subsidioExiste }) => {
   return (
     <div className={styles.resultados}>
       <button className={styles.botonVolver} onClick={onVolver}>Volver</button>
@@ -22,7 +23,14 @@ const Resultados: React.FC<ResultadosProps> = ({ onVolver, volumenFacturado, mod
         <div className={styles.dato}>
           Modalidad de Facturación: {modalidadFacturacion?.trim() ? modalidadFacturacion : "..."}
         </div>
-        <div className={styles.dato}>Sin subsidio</div>
+        <div className={styles.dato}>
+          {subsidioExiste != null
+            ? subsidioExiste === 1
+              ? "Con Subsidio"
+              : "Sin Subsidio"
+            : "Estado de subsidio no disponible"
+          }
+        </div>
       </div>
 
       {/* Sección de gráficos */}

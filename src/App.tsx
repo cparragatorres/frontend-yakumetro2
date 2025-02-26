@@ -6,6 +6,7 @@ import Resultados from "./components/Resultados/Resultados";
 import Buscando from "./components/Buscando/Buscando";
 import { obtenerVolumenFacturado } from "./services/volumenFacturadoService";
 import { obtenerModalidadFacturacion } from "./services/modalidadFacturacionService";
+import { obtenerSubsidioExiste } from "./services/subsidioExisteService";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -13,6 +14,7 @@ const App: React.FC = () => {
   const [mostrarResultados, setMostrarResultados] = useState(false);
   const [volumenFacturado, setVolumenFacturado] = useState<number | null>(null);
   const [modalidadFacturacion, setModalidadFacturacion] = useState<string | null>(null);
+  const [subsidioExiste, setSubsidioExiste] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null); // Nuevo estado para manejar errores
 
   const handleBuscar = async (departamento: string, eps: string, numeroConexion: string) => {
@@ -21,13 +23,15 @@ const App: React.FC = () => {
     setError(null); // Reiniciar el estado de error antes de una nueva búsqueda
 
     try {
-      const [volumenFacturado, modalidadFacturacion] = await Promise.all([
+      const [volumenFacturado, modalidadFacturacion, subsidioExiste] = await Promise.all([
         obtenerVolumenFacturado(numeroConexion),
         obtenerModalidadFacturacion(numeroConexion),
+        obtenerSubsidioExiste(numeroConexion),
       ]);
 
       setVolumenFacturado(volumenFacturado?.volumen_facturado ?? null);
       setModalidadFacturacion(modalidadFacturacion?.modalidad_facturacion ?? null);
+      setSubsidioExiste(subsidioExiste?.existe_subsidio ?? null);
 
     } catch (err) {
       console.error("Error al obtener datos:", err);
@@ -48,11 +52,11 @@ const App: React.FC = () => {
           onVolver={() => setMostrarResultados(false)}
           volumenFacturado={volumenFacturado}
           modalidadFacturacion={modalidadFacturacion}
+          subsidioExiste={subsidioExiste}
         />
       ) : (
         <>
           {error && <div className="error">{error}</div>}
-          {"Hubo un problema al obtener la información. Por favor, intenta nuevamente en unos minutos."}
           <Formulario onBuscar={handleBuscar} />
           <InformacionAgua />
         </>
