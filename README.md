@@ -44,7 +44,7 @@ cd frontend-yakumetro2
 
 ### 📦 **2. Instalar dependencias**
 ```sh
-npm install
+npm install axios
 ```
 
 ### 🚀 **3. Ejecutar el proyecto**
