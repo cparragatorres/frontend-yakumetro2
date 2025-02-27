@@ -43,9 +43,9 @@ const Resultados: React.FC<ResultadosProps> = ({
       {/* Sección de gráficos */}
       <div className={styles.graficos}>
         <ConsumoMensual numeroConexion={numeroConexion}/>
-        <ConsumoManzana />
+        {/* <ConsumoManzana /> */}
         <ConsumoDistrito />
-        <ConsumoSubsidio />
+        {/* <ConsumoSubsidio /> */}
       </div>
     </div>
   );
