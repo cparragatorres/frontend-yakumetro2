@@ -28,7 +28,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({ titulo, datos, colorBarra
       <h3 className={styles.titulo} style={{ backgroundColor: colorBarras }}>{titulo}</h3>
       <div className={styles.graficoContainer}>
         <ResponsiveContainer width="60%" height={300}>
-          <ComposedChart data={datos}>
+          <ComposedChart data={datos} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
             <YAxis />
