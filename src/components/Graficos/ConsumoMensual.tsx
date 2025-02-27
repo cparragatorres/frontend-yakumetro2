@@ -27,6 +27,20 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
       });
   }, [numeroConexion]); // El efecto se ejecutará cada vez que cambie el número de conexión
 
+  // Obtener el consumo del último mes y compararlo con el promedio
+  const ultimoMes = datosMensuales.length > 0 ? datosMensuales[datosMensuales.length - 1] : null;
+  const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
+
+  // Mensaje dinámico con saltos de línea y palabras clave en negrita
+  const mensajeDinamico = (
+    <>
+      Tu consumo del <strong>último mes</strong> <br />
+      fue <strong>{comparacion}</strong> al <strong>promedio</strong> de <br />
+      los últimos <strong>6 meses</strong>
+    </>
+  );
+
+
   return (
     <div>
       {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
@@ -37,6 +51,7 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
         colorLinea="orange"
         keyBarras="consumo"
         keyLinea="promedio"
+        mensajeDinamico={mensajeDinamico}
       />
     </div>
   );

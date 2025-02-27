@@ -10,6 +10,20 @@ const datosManzana = [
 ];
 
 const ConsumoManzana: React.FC = () => {
+
+  // Obtener el consumo del último mes y compararlo con el promedio
+  const ultimoMes = datosManzana.length > 0 ? datosManzana[datosManzana.length - 1] : null;
+  const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
+
+  // Mensaje dinámico con saltos de línea y palabras clave en negrita
+  const mensajeDinamico = (
+    <>
+      Tu consumo del <strong>último mes</strong> <br />
+      fue <strong>{comparacion}</strong> al <strong>promedio</strong> de <br />
+      los últimos <strong>6 meses</strong>
+    </>
+  );
+
   return (
     <GraficoBarras
       titulo="Consumo de la Manzana"
@@ -18,6 +32,7 @@ const ConsumoManzana: React.FC = () => {
       colorLinea="orange"
       keyBarras="consumo"
       keyLinea="promedio"
+      mensajeDinamico={mensajeDinamico}
     />
   );
 };

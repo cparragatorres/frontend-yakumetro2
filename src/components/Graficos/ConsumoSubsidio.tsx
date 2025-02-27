@@ -9,6 +9,19 @@ const datosSubsidio = [
   { mes: "Octubre", consumo: 55, promedio: 76.32 },
 ];
 
+// Obtener el consumo del último mes y compararlo con el promedio
+const ultimoMes = datosSubsidio.length > 0 ? datosSubsidio[datosSubsidio.length - 1] : null;
+const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
+
+// Mensaje dinámico con saltos de línea y palabras clave en negrita
+const mensajeDinamico = (
+  <>
+    Tu consumo del <strong>último mes</strong> <br />
+    fue <strong>{comparacion}</strong> al <strong>promedio</strong> de <br />
+    los últimos <strong>6 meses</strong>
+  </>
+);
+
 const ConsumoSubsidio: React.FC = () => {
   return (
     <GraficoBarras
@@ -18,6 +31,7 @@ const ConsumoSubsidio: React.FC = () => {
       colorLinea="orange"
       keyBarras="consumo"
       keyLinea="promedio"
+      mensajeDinamico={mensajeDinamico}
     />
   );
 };

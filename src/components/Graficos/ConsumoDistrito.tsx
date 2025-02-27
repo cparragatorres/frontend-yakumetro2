@@ -10,6 +10,20 @@ const datosDistrito = [
 ];
 
 const ConsumoDistrito: React.FC = () => {
+
+  // Obtener el consumo del último mes y compararlo con el promedio
+  const ultimoMes = datosDistrito.length > 0 ? datosDistrito[datosDistrito.length - 1] : null;
+  const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
+
+  // Mensaje dinámico con saltos de línea y palabras clave en negrita
+  const mensajeDinamico = (
+    <>
+      Tu consumo del <strong>último mes</strong> <br />
+      fue <strong>{comparacion}</strong> al <strong>promedio</strong> de <br />
+      los últimos <strong>6 meses</strong>
+    </>
+  );
+
   return (
     <GraficoBarras
       titulo="Consumo del Distrito"
@@ -18,6 +32,7 @@ const ConsumoDistrito: React.FC = () => {
       colorLinea="orange"
       keyBarras="consumo"
       keyLinea="promedio"
+      mensajeDinamico={mensajeDinamico}
     />
   );
 };

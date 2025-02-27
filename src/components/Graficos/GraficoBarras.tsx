@@ -20,9 +20,12 @@ interface GraficoBarrasProps {
   colorLinea: string;
   keyBarras: string;
   keyLinea: string;
+  mensajeDinamico: React.ReactNode;
 }
 
-const GraficoBarras: React.FC<GraficoBarrasProps> = ({ titulo, datos, colorBarras, colorLinea, keyBarras, keyLinea }) => {
+const GraficoBarras: React.FC<GraficoBarrasProps> = ({
+  titulo, datos, colorBarras, colorLinea, keyBarras, keyLinea, mensajeDinamico
+}) => {
   return (
     <div className={styles.contenedor}>
       <h3 className={styles.titulo} style={{ backgroundColor: colorBarras }}>{titulo}</h3>
@@ -46,10 +49,10 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({ titulo, datos, colorBarra
           </ComposedChart>
         </ResponsiveContainer>
 
-        {/* Información adicional */}
+        {/* Información adicional con mensaje dinámico */}
         <div className={styles.infoContainer}>
           <div className={styles.imagenPlaceholder}></div>
-          <p className={styles.textoInfo}>Tu consumo del último mes fue mayor al promedio</p>
+          <p className={styles.textoInfo}>{mensajeDinamico}</p>
         </div>
       </div>
     </div>
