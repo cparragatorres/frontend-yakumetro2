@@ -30,7 +30,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
     <div className={styles.contenedor}>
       <h3 className={styles.titulo} style={{ backgroundColor: colorBarras }}>{titulo}</h3>
       <div className={styles.graficoContainer}>
-        <ResponsiveContainer width="60%" height={300}>
+        <ResponsiveContainer width="70%" height={300}>
           <ComposedChart data={datos} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />

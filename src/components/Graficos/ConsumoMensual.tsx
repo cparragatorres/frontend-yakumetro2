@@ -34,9 +34,10 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
   // Mensaje dinámico con saltos de línea y palabras clave en negrita
   const mensajeDinamico = (
     <>
-      Tu consumo del <strong>último mes</strong> <br />
-      fue <strong>{comparacion}</strong> al <strong>promedio</strong> de <br />
-      los últimos <strong>6 meses</strong>
+      Tu consumo del<br />
+      <strong>último mes</strong> <br />
+      fue <strong>{comparacion}</strong> al <strong>promedio</strong><br />
+      de los últimos <strong>6 meses</strong>
     </>
   );
 

@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GraficoBarras from "./GraficoBarras";
+import { obtenerconsumoDistrito } from "../../services/consumoDistritoService";
+import { ConsumoDistritoModels } from "../../models/consumoDistritoModels";
 
-const datosDistrito = [
-  { mes: "Junio", consumo: 20, promedio: 15 },
-  { mes: "Julio", consumo: 22, promedio: 16 },
-  { mes: "Agosto", consumo: 22, promedio: 15 },
-  { mes: "Septiembre", consumo: 19, promedio: 14 },
-  { mes: "Octubre", consumo: 21, promedio: 16 },
-];
+interface ConsumoDistritoProps {
+  numeroConexion: string;  // Recibimos el número de conexión como prop
+}
 
-const ConsumoDistrito: React.FC = () => {
+const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => {
+
+  const [datosDistrito, setDatosDistritos] = useState<ConsumoDistritoModels[]>([]); // Tipo de estado adecuado
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+      // Llamamos al servicio para obtener los datos de consumo distrito
+      obtenerconsumoDistrito(numeroConexion)
+        .then((data) => {
+          if (data) {
+            setDatosDistritos(data); // Asignamos los datos de la respuesta al estado
+          } else {
+            setError("No se pudieron obtener los datos de consumo.");
+          }
+        })
+        .catch((err) => {
+          console.error("Error al obtener los datos:", err);
+          setError("Hubo un error al obtener los datos.");
+        });
+    }, [numeroConexion]); // El efecto se ejecutará cada vez que cambie el número de conexión
+
 
   // Obtener el consumo del último mes y compararlo con el promedio
   const ultimoMes = datosDistrito.length > 0 ? datosDistrito[datosDistrito.length - 1] : null;
@@ -18,22 +36,25 @@ const ConsumoDistrito: React.FC = () => {
   // Mensaje dinámico con saltos de línea y palabras clave en negrita
   const mensajeDinamico = (
     <>
-      Tu consumo del <strong>último mes</strong> <br />
-      fue <strong>{comparacion}</strong> al <strong>promedio</strong> de <br />
-      los últimos <strong>6 meses</strong>
+      Tu <strong>último</strong> consumo fue<br />
+      <strong>{comparacion}</strong> que el <strong>promedio</strong><br />
+      de tu distrito en el <strong>último</strong> mes
     </>
   );
 
   return (
-    <GraficoBarras
-      titulo="Consumo del Distrito"
-      datos={datosDistrito}
-      colorBarras="purple"
-      colorLinea="orange"
-      keyBarras="consumo"
-      keyLinea="promedio"
-      mensajeDinamico={mensajeDinamico}
-    />
+    <div>
+      {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
+      <GraficoBarras
+        titulo="Consumo del Distrito"
+        datos={datosDistrito}
+        colorBarras="purple"
+        colorLinea="orange"
+        keyBarras="consumo"
+        keyLinea="promedio"
+        mensajeDinamico={mensajeDinamico}
+      />
+    </div>
   );
 };
 
