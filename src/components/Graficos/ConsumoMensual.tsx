@@ -8,11 +8,12 @@ interface ConsumoMensualProps {
 }
 
 const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
-  const [datosMensuales, setDatosMensuales] = useState<{ datosBarras: any[], datosLinea: any[] }>({
+  const [datosMensuales, setDatosMensuales] = useState<{ datosBarras: any[], datosLinea: any[] }>( {
     datosBarras: [],
     datosLinea: []
   });
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     // Llamamos al servicio para obtener los datos de consumo mensual
     obtenerConsumoMensual(numeroConexion)
@@ -22,18 +23,23 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
             mes: item.mes,
             consumo: item.consumo
           }));
+
           const datosLinea = data.map((item) => ({
             mes: item.mes,
-            consumo: item.promedio
+            promedio: item.promedio
           }));
 
-          setDatosMensuales({ datosBarras, datosLinea });  // Guardamos ambos en el estado
+          // Verificamos los datos de las barras y la línea
+          console.log("🔵 Datos de Barras (consumo):", datosBarras); // Verifica que los datos de consumo sean correctos
+          console.log("🟠 Datos de Línea (promedio):", datosLinea); // Verifica que los datos del promedio sean correctos
+
+          setDatosMensuales({ datosBarras, datosLinea }); // Guardamos ambos en el estado
         } else {
           setError("No se pudieron obtener los datos de consumo.");
         }
       })
       .catch((err) => {
-        console.error("Error al obtener los datos:", err);
+        console.error("❌ Error al obtener los datos:", err);
         setError("Hubo un error al obtener los datos.");
       });
   }, [numeroConexion]); // El efecto se ejecutará cada vez que cambie el número de conexión
@@ -51,7 +57,6 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
       de los últimos <strong>6 meses</strong>
     </>
   );
-
 
   return (
     <div>

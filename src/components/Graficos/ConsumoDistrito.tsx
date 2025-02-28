@@ -28,17 +28,20 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
               consumo: item.consumo
             }));
 
+            // Verifica que los datos estén bien asignados para las barras y la línea
+            console.log("🔵 Datos de Barras (promedio):", datosBarras);
+            console.log("🟠 Datos de Línea (consumo):", datosLinea);
+
             setDatosDistritos({ datosBarras, datosLinea });  // Guardamos ambos en el estado
           } else {
             setError("No se pudieron obtener los datos de consumo.");
           }
         })
         .catch((err) => {
-          console.error("Error al obtener los datos:", err);
+          console.error("❌ Error al obtener los datos:", err);
           setError("Hubo un error al obtener los datos.");
         });
     }, [numeroConexion]); // El efecto se ejecutará cada vez que cambie el número de conexión
-
 
   // Obtener el consumo del último mes y compararlo con el promedio
   const ultimoMes = datosDistrito.datosBarras.length > 0 ? datosDistrito.datosBarras[datosDistrito.datosBarras.length - 1] : null;
@@ -64,7 +67,7 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
         colorLinea="orange"
         mensajeDinamico={mensajeDinamico}
         claveBarras="consumo"
-        claveLinea="promedio"
+        claveLinea="consumo"
         leyendaBarras="Consumo"
         leyendaLinea="Promedio"
       />
