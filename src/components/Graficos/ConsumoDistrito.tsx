@@ -60,7 +60,7 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
     <div>
       {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
       <GraficoBarras
-        titulo="Consumo Mensual"
+        titulo="Consumo del Distrito"
         datosBarras={datosDistrito.datosBarras}
         datosLinea={datosDistrito.datosLinea}
         colorBarras="purple"
@@ -68,8 +68,8 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
         mensajeDinamico={mensajeDinamico}
         claveBarras="consumo"
         claveLinea="consumo"
-        leyendaBarras="Consumo"
-        leyendaLinea="Promedio"
+        leyendaBarras="Consumo Promedio de tu Distrito"
+        leyendaLinea="Tu Consumo"
       />
     </div>
   );
