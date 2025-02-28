@@ -74,7 +74,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
             </Bar>
 
             {/* Línea con datos de promedio o consumo */}
-            <Line type="monotone" data={datosLinea} dataKey={claveLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 5 }} />
+            <Line type="monotone" data={datosLinea} dataKey={claveLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 6 }} />
           </ComposedChart>
         </ResponsiveContainer>
 
