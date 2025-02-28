@@ -65,6 +65,8 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
         mensajeDinamico={mensajeDinamico}
         claveBarras="consumo"
         claveLinea="promedio"
+        leyendaBarras="Consumo"
+        leyendaLinea="Promedio"
       />
     </div>
   );

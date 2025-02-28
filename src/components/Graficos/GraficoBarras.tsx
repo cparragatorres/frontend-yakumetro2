@@ -1,4 +1,6 @@
 import React from "react";
+import styles from "./GraficoBarras.module.css";
+
 import {
   ComposedChart,
   Bar,
@@ -11,7 +13,6 @@ import {
   Line,
   LabelList
 } from "recharts";
-import styles from "./GraficoBarras.module.css";
 
 interface GraficoBarrasProps {
   titulo: string;
@@ -22,11 +23,33 @@ interface GraficoBarrasProps {
   mensajeDinamico: React.ReactNode;
   claveBarras: string;
   claveLinea: string;
+  leyendaBarras: string;   // Leyenda para las barras
+  leyendaLinea: string;    // Leyenda para la línea
 }
 
 const GraficoBarras: React.FC<GraficoBarrasProps> = ({
-  titulo, datosBarras, datosLinea, colorBarras, colorLinea, mensajeDinamico, claveBarras, claveLinea
+  titulo, datosBarras, datosLinea, colorBarras, colorLinea, mensajeDinamico,
+  claveBarras, claveLinea, leyendaBarras, leyendaLinea
 }) => {
+  // Componente personalizado para el Tooltip
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const { mes } = payload[0].payload;  // Extraemos el mes de la primera barra o línea
+      const consumo = payload[0].value;    // Valor de la barra
+      const promedio = payload[1] ? payload[1].value : null;  // Valor de la línea (verificamos que exista)
+
+      return (
+        <div className={`${styles.tooltipContainer} ${styles.defaultTooltip}`}>
+          <h4>{mes}</h4>
+          <p style={{ color: colorBarras }}>{leyendaBarras}: {consumo}</p>  {/* Aplicamos el color dinámico */}
+          {promedio !== null && <p style={{ color: colorLinea }}>{leyendaLinea}: {promedio}</p>}  {/* También para la línea */}
+        </div>
+      );
+    }
+    return null; // Retorna null si no está activo o si no hay datos
+  };
+
+
   return (
     <div className={styles.contenedor}>
       <h3 className={styles.titulo} style={{ backgroundColor: colorBarras }}>{titulo}</h3>
@@ -36,8 +59,11 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
             <YAxis />
-            <Tooltip />
-            <Legend />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend payload={[
+              { value: leyendaBarras, type: 'square', color: colorBarras },
+              { value: leyendaLinea, type: 'line', color: colorLinea }
+            ]} />
 
             {/* Barras con datos de consumo o promedio */}
             <Bar dataKey={claveBarras} fill={colorBarras}>
@@ -45,8 +71,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
             </Bar>
 
             {/* Línea con datos de promedio o consumo */}
-            <Line type="monotone" dataKey={claveLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 5 }} />
-
+            <Line type="monotone" data={datosLinea} dataKey={claveLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 5 }} />
           </ComposedChart>
         </ResponsiveContainer>
 

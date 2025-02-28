@@ -34,6 +34,8 @@ const ConsumoManzana: React.FC = () => {
     mensajeDinamico={mensajeDinamico}
     claveBarras="consumo"
     claveLinea="promedio"
+    leyendaBarras="Consumo"
+    leyendaLinea="Promedio"
     />
   );
 };

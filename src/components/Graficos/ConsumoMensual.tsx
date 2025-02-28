@@ -65,6 +65,8 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
         mensajeDinamico={mensajeDinamico}
         claveBarras="consumo"
         claveLinea="promedio"
+        leyendaBarras="Consumo por Usuario"
+        leyendaLinea="Promedio"
       />
     </div>
   );
