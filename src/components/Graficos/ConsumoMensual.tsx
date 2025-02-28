@@ -8,15 +8,26 @@ interface ConsumoMensualProps {
 }
 
 const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
-  const [datosMensuales, setDatosMensuales] = useState<ConsumoMensualModels[]>([]); // Tipo de estado adecuado
+  const [datosMensuales, setDatosMensuales] = useState<{ datosBarras: any[], datosLinea: any[] }>({
+    datosBarras: [],
+    datosLinea: []
+  });
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     // Llamamos al servicio para obtener los datos de consumo mensual
     obtenerConsumoMensual(numeroConexion)
       .then((data) => {
         if (data) {
-          setDatosMensuales(data); // Asignamos los datos de la respuesta al estado
+          const datosBarras = data.map((item) => ({
+            mes: item.mes,
+            consumo: item.consumo
+          }));
+          const datosLinea = data.map((item) => ({
+            mes: item.mes,
+            consumo: item.promedio
+          }));
+
+          setDatosMensuales({ datosBarras, datosLinea });  // Guardamos ambos en el estado
         } else {
           setError("No se pudieron obtener los datos de consumo.");
         }
@@ -28,7 +39,7 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
   }, [numeroConexion]); // El efecto se ejecutará cada vez que cambie el número de conexión
 
   // Obtener el consumo del último mes y compararlo con el promedio
-  const ultimoMes = datosMensuales.length > 0 ? datosMensuales[datosMensuales.length - 1] : null;
+  const ultimoMes = datosMensuales.datosBarras.length > 0 ? datosMensuales.datosBarras[datosMensuales.datosBarras.length - 1] : null;
   const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
 
   // Mensaje dinámico con saltos de línea y palabras clave en negrita
@@ -47,12 +58,13 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
       {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
       <GraficoBarras
         titulo="Consumo Mensual"
-        datos={datosMensuales}
+        datosBarras={datosMensuales.datosBarras}
+        datosLinea={datosMensuales.datosLinea}
         colorBarras="blue"
         colorLinea="orange"
-        keyBarras="consumo"
-        keyLinea="promedio"
         mensajeDinamico={mensajeDinamico}
+        claveBarras="consumo"
+        claveLinea="promedio"
       />
     </div>
   );

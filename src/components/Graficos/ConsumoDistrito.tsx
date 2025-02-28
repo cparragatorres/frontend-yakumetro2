@@ -8,8 +8,10 @@ interface ConsumoDistritoProps {
 }
 
 const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => {
-
-  const [datosDistrito, setDatosDistritos] = useState<ConsumoDistritoModels[]>([]); // Tipo de estado adecuado
+  const [datosDistrito, setDatosDistritos] = useState<{ datosBarras: any[], datosLinea: any[] }>({
+      datosBarras: [],
+      datosLinea: []
+    });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -17,7 +19,16 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
       obtenerconsumoDistrito(numeroConexion)
         .then((data) => {
           if (data) {
-            setDatosDistritos(data); // Asignamos los datos de la respuesta al estado
+            const datosBarras = data.map((item) => ({
+              mes: item.mes,
+              consumo: item.promedio
+            }));
+            const datosLinea = data.map((item) => ({
+              mes: item.mes,
+              consumo: item.consumo
+            }));
+
+            setDatosDistritos({ datosBarras, datosLinea });  // Guardamos ambos en el estado
           } else {
             setError("No se pudieron obtener los datos de consumo.");
           }
@@ -30,7 +41,7 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
 
 
   // Obtener el consumo del último mes y compararlo con el promedio
-  const ultimoMes = datosDistrito.length > 0 ? datosDistrito[datosDistrito.length - 1] : null;
+  const ultimoMes = datosDistrito.datosBarras.length > 0 ? datosDistrito.datosBarras[datosDistrito.datosBarras.length - 1] : null;
   const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
 
   // Mensaje dinámico con saltos de línea y palabras clave en negrita
@@ -46,13 +57,14 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
     <div>
       {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
       <GraficoBarras
-        titulo="Consumo del Distrito"
-        datos={datosDistrito}
+        titulo="Consumo Mensual"
+        datosBarras={datosDistrito.datosBarras}
+        datosLinea={datosDistrito.datosLinea}
         colorBarras="purple"
         colorLinea="orange"
-        keyBarras="consumo"
-        keyLinea="promedio"
         mensajeDinamico={mensajeDinamico}
+        claveBarras="consumo"
+        claveLinea="promedio"
       />
     </div>
   );

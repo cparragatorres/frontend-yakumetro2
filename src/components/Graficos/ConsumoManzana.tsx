@@ -26,13 +26,14 @@ const ConsumoManzana: React.FC = () => {
 
   return (
     <GraficoBarras
-      titulo="Consumo de la Manzana"
-      datos={datosManzana}
-      colorBarras="green"
-      colorLinea="orange"
-      keyBarras="consumo"
-      keyLinea="promedio"
-      mensajeDinamico={mensajeDinamico}
+    titulo="Consumo Mensual"
+    datosBarras={datosManzana.map((item) => ({ mes: item.mes, consumo: item.consumo }))}
+    datosLinea={datosManzana.map((item) => ({ mes: item.mes, consumo: item.promedio }))}
+    colorBarras="blue"
+    colorLinea="orange"
+    mensajeDinamico={mensajeDinamico}
+    claveBarras="consumo"
+    claveLinea="promedio"
     />
   );
 };

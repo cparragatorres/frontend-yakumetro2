@@ -15,36 +15,37 @@ import styles from "./GraficoBarras.module.css";
 
 interface GraficoBarrasProps {
   titulo: string;
-  datos: any[];
+  datosBarras: any[];
+  datosLinea: any[];
   colorBarras: string;
   colorLinea: string;
-  keyBarras: string;
-  keyLinea: string;
   mensajeDinamico: React.ReactNode;
+  claveBarras: string;
+  claveLinea: string;
 }
 
 const GraficoBarras: React.FC<GraficoBarrasProps> = ({
-  titulo, datos, colorBarras, colorLinea, keyBarras, keyLinea, mensajeDinamico
+  titulo, datosBarras, datosLinea, colorBarras, colorLinea, mensajeDinamico, claveBarras, claveLinea
 }) => {
   return (
     <div className={styles.contenedor}>
       <h3 className={styles.titulo} style={{ backgroundColor: colorBarras }}>{titulo}</h3>
       <div className={styles.graficoContainer}>
         <ResponsiveContainer width="70%" height={300}>
-          <ComposedChart data={datos} margin={{ top: 20 }}>
+          <ComposedChart data={datosBarras} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
             <YAxis />
             <Tooltip />
             <Legend />
 
-            {/* Barras con etiquetas */}
-            <Bar dataKey={keyBarras} fill={colorBarras} >
-              <LabelList dataKey={keyBarras} position="top" fontSize={14} fontWeight="bold" />
+            {/* Barras con datos de consumo o promedio */}
+            <Bar dataKey={claveBarras} fill={colorBarras}>
+              <LabelList dataKey={claveBarras} position="top" fontSize={14} fontWeight="bold" />
             </Bar>
 
-            {/* Línea del promedio */}
-            <Line type="monotone" dataKey={keyLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 5 }}/>
+            {/* Línea con datos de promedio o consumo */}
+            <Line type="monotone" dataKey={claveLinea} stroke={colorLinea} strokeWidth={3} dot={{ r: 5 }} />
 
           </ComposedChart>
         </ResponsiveContainer>

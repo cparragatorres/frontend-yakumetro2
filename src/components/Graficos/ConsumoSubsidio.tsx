@@ -25,13 +25,14 @@ const mensajeDinamico = (
 const ConsumoSubsidio: React.FC = () => {
   return (
     <GraficoBarras
-      titulo="Consumo Subsidiado"
-      datos={datosSubsidio}
-      colorBarras="cyan"
-      colorLinea="orange"
-      keyBarras="consumo"
-      keyLinea="promedio"
-      mensajeDinamico={mensajeDinamico}
+    titulo="Consumo Mensual"
+    datosBarras={datosSubsidio.map((item) => ({ mes: item.mes, consumo: item.consumo }))}
+    datosLinea={datosSubsidio.map((item) => ({ mes: item.mes, consumo: item.promedio }))}
+    colorBarras="blue"
+    colorLinea="orange"
+    mensajeDinamico={mensajeDinamico}
+    claveBarras="consumo"
+    claveLinea="promedio"
     />
   );
 };
