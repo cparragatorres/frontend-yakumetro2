@@ -31,6 +31,9 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
   titulo, datosBarras, datosLinea, colorBarras, colorLinea, mensajeDinamico,
   claveBarras, claveLinea, leyendaBarras, leyendaLinea
 }) => {
+  const maxValorBarras = Math.max(...datosBarras.map(item => item[claveBarras]));
+  const maxValorLinea = Math.max(...datosLinea.map(item => item[claveLinea]));
+  const maxValorRedondeado = Math.ceil((Math.max(maxValorBarras, maxValorLinea))/ 10) * 10;
   // Componente personalizado para el Tooltip
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -58,7 +61,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
           <ComposedChart data={datosBarras} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
-            <YAxis />
+            <YAxis domain={[0, maxValorRedondeado]} />
             <Tooltip content={<CustomTooltip />} />
             <Legend payload={[
               { value: leyendaBarras, type: 'square', color: colorBarras },
