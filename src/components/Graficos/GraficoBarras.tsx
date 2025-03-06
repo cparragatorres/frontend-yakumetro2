@@ -25,15 +25,20 @@ interface GraficoBarrasProps {
   claveLinea: string;
   leyendaBarras: string;   // Leyenda para las barras
   leyendaLinea: string;    // Leyenda para la línea
+  domain?: [number, number];
 }
 
 const GraficoBarras: React.FC<GraficoBarrasProps> = ({
   titulo, datosBarras, datosLinea, colorBarras, colorLinea, mensajeDinamico,
-  claveBarras, claveLinea, leyendaBarras, leyendaLinea
+  claveBarras, claveLinea, leyendaBarras, leyendaLinea, domain
 }) => {
   const maxValorBarras = Math.max(...datosBarras.map(item => item[claveBarras]));
   const maxValorLinea = Math.max(...datosLinea.map(item => item[claveLinea]));
   const maxValorRedondeado = Math.ceil((Math.max(maxValorBarras, maxValorLinea))/ 10) * 10;
+
+  // Si no se pasa `domain`, usamos un valor predeterminado
+  const dominioFinal = domain || [0, maxValorRedondeado];  // Valor predeterminado si no se pasa
+
   // Componente personalizado para el Tooltip
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -61,7 +66,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
           <ComposedChart data={datosBarras} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
-            <YAxis domain={[0, maxValorRedondeado]} />
+            <YAxis domain={dominioFinal} />
             <Tooltip content={<CustomTooltip />} />
             <Legend payload={[
               { value: leyendaBarras, type: 'square', color: colorBarras },
