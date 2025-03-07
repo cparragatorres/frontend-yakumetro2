@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Resultados.module.css";
 import ConsumoMensual from "../Graficos/ConsumoMensual";
+// import ConsumoMensualConDiferencia from "../Graficos/ConsumoMensualConDiferencia";
 import ConsumoManzana from "../Graficos/ConsumoManzana";
 import ConsumoDistrito from "../Graficos/ConsumoDistrito";
 import ConsumoSubsidio from "../Graficos/ConsumoSubsidio";
@@ -43,6 +44,7 @@ const Resultados: React.FC<ResultadosProps> = ({
       {/* Sección de gráficos */}
       <div className={styles.graficos}>
         <ConsumoMensual numeroConexion={numeroConexion}/>
+        {/* <ConsumoMensualConDiferencia numeroConexion={numeroConexion}/> */}
         {/* <ConsumoManzana /> */}
         <ConsumoDistrito numeroConexion={numeroConexion}/>
         <ConsumoSubsidio numeroConexion={numeroConexion} />

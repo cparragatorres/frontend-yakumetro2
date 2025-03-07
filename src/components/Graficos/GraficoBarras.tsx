@@ -66,7 +66,7 @@ const GraficoBarras: React.FC<GraficoBarrasProps> = ({
           <ComposedChart data={datosBarras} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="mes" />
-            <YAxis domain={dominioFinal} />
+            <YAxis domain={dominioFinal} tickFormatter={(value) => value.toFixed(2)} />
             <Tooltip content={<CustomTooltip />} />
             <Legend payload={[
               { value: leyendaBarras, type: 'square', color: colorBarras },

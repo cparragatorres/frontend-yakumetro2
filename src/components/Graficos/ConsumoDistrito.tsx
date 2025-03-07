@@ -63,7 +63,7 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
         titulo="Consumo del Distrito"
         datosBarras={datosDistrito.datosBarras}
         datosLinea={datosDistrito.datosLinea}
-        colorBarras="purple"
+        colorBarras="#F0C010"
         colorLinea="orange"
         mensajeDinamico={mensajeDinamico}
         claveBarras="consumo"
