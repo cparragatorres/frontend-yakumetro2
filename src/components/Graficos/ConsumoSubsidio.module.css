@@ -1,0 +1,10 @@
+.mensaje {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* dar color al texto */
+  color: #005DBA;
+}

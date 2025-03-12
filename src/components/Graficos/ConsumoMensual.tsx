@@ -65,13 +65,21 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
   const mensajeDinamico2 = (
     <>
       {diferenciaDelUltimoMes !== null ? (
-        diferenciaDelUltimoMes > 0 ? (
-          // Si la diferencia es positiva, significa que el consumo fue mayor que el promedio
-          <>¡Buen trabajo! Has ahorrado <strong>{diferenciaDelUltimoMes} unidades</strong> de consumo respecto al promedio de los últimos 6 meses.</>
-        ) : diferenciaDelUltimoMes < 0 ? (
+        diferenciaDelUltimoMes > 0 ?
+        (
           // Si la diferencia es negativa, significa que el consumo fue mayor al promedio
-          <>Tu consumo en el último mes fue <strong>superior</strong> al promedio de los últimos 6 meses en <strong>{Math.abs(diferenciaDelUltimoMes)} unidades</strong>.</>
-        ) : (
+          <>Tu consumo en el último mes <strong>superó</strong> el promedio de los últimos 6 meses en <strong>{Math.abs(diferenciaDelUltimoMes)} soles</strong>.</>
+        )
+
+
+        : diferenciaDelUltimoMes < 0 ?
+
+        (
+          // Si la diferencia es positiva, significa que el consumo fue mayor que el promedio
+          <>¡Buen trabajo! Has ahorrado <strong>{Math.abs(diferenciaDelUltimoMes)} soles</strong> de consumo respecto al promedio de los últimos 6 meses.</>
+        )
+        :
+        (
           // Si la diferencia es 0, significa que no hubo variación entre el consumo y el promedio
           <>Tu consumo en el último mes fue <strong>igual</strong> al promedio de los últimos 6 meses.</>
         )
@@ -102,9 +110,9 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
 
       {/* Nuevo gráfico de barras con la diferencia entre consumo y promedio */}
       <GraficoBarras
-        titulo="Diferencia entre Consumo y Promedio"
+        titulo="Diferencia entre el Consumo Mensual y el Promedio"
         datosBarras={datosDiferencia}  // Usamos los datos de las diferencias calculadas
-        datosLinea={[0,0,0,0,0,0]}  // Este gráfico no necesita la línea del promedio
+        datosLinea={[]}  // Este gráfico no necesita la línea del promedio
         colorBarras="#AEED00"
         colorLinea="orange"
         mensajeDinamico={mensajeDinamico2}
