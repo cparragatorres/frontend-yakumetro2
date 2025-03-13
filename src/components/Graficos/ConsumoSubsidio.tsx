@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import GraficoBarras from "./GraficoBarras";
 import { obtenerSubsidioMensual } from "../../services/subsidioMensualService";
 import styles from './ConsumoSubsidio.module.css';
 
@@ -29,8 +28,8 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
           }));
 
           // Verifica que los datos estén bien asignados para las barras y la línea
-          console.log("🔵 Datos de Barras (promedio):", datosBarras);
-          console.log("🟠 Datos de Línea (consumo):", datosLinea);
+          // console.log("🔵 Datos de Barras (promedio):", datosBarras);
+          // console.log("🟠 Datos de Línea (consumo):", datosLinea);
 
           setDatosSubsidio({ datosBarras, datosLinea });  // Guardamos ambos en el estado
         } else {

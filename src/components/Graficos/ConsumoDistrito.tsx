@@ -29,8 +29,8 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
             }));
 
             // Verifica que los datos estén bien asignados para las barras y la línea
-            console.log("🔵 Datos de Barras (promedio):", datosBarras);
-            console.log("🟠 Datos de Línea (consumo):", datosLinea);
+            // console.log("🔵 Datos de Barras (promedio):", datosBarras);
+            // console.log("🟠 Datos de Línea (consumo):", datosLinea);
 
             setDatosDistritos({ datosBarras, datosLinea });  // Guardamos ambos en el estado
           } else {

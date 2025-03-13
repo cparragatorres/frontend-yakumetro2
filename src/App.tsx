@@ -7,32 +7,43 @@ import Buscando from "./components/Buscando/Buscando";
 import { obtenerVolumenFacturado } from "./services/volumenFacturadoService";
 import { obtenerModalidadFacturacion } from "./services/modalidadFacturacionService";
 import { obtenerSubsidioExiste } from "./services/subsidioExisteService";
-import { obtenerConsumoMensual }from "./services/consumoMensualService";
+import { VolumenFacturadoModels } from "./models/VolumenFacturadoModels";
 import "./App.css";
 
 const App: React.FC = () => {
   const [buscando, setBuscando] = useState(false);
   const [mostrarResultados, setMostrarResultados] = useState(false);
-  const [volumenFacturado, setVolumenFacturado] = useState<number | null>(null);
+  const [volumenFacturado, setVolumenFacturado] = useState<VolumenFacturadoModels | null>(null);
   const [modalidadFacturacion, setModalidadFacturacion] = useState<string | null>(null);
   const [subsidioExiste, setSubsidioExiste] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null); // Nuevo estado para manejar errores
   const [numeroConexion, setNumeroConexion] = useState<string>(""); // Añadimos el estado para el número de conexión
 
   const handleBuscar = async (departamento: string, eps: string, numeroConexion: string) => {
-    console.log("Datos recibidos en App.tsx:", { departamento, eps, numeroConexion });
+    console.log("Consultando API con el número de conexión:", numeroConexion);
+
     setBuscando(true);
     setError(null); // Reiniciar el estado de error antes de una nueva búsqueda
     setNumeroConexion(numeroConexion);
 
     try {
-      const [volumenFacturado, modalidadFacturacion, subsidioExiste] = await Promise.all([
+      const [volumenFacturadoResponse, modalidadFacturacion, subsidioExiste] = await Promise.all([
         obtenerVolumenFacturado(numeroConexion),
         obtenerModalidadFacturacion(numeroConexion),
         obtenerSubsidioExiste(numeroConexion),
       ]);
 
-      setVolumenFacturado(volumenFacturado?.volumen_facturado ?? null);
+      if (volumenFacturadoResponse && volumenFacturadoResponse.length > 0) {
+        const ultimoVolumen = volumenFacturadoResponse[volumenFacturadoResponse.length - 1];
+        console.log("Último volumen facturado:", ultimoVolumen); // Aquí verás el último objeto con mes, volumen_facturado, etc.
+        // como ver el promedio del ultimo volumen facturado
+        console.log("Promedio del último volumen facturado:", ultimoVolumen.promedio);
+
+        setVolumenFacturado(ultimoVolumen); // Accede correctamente a volumen_facturado
+      } else {
+        setVolumenFacturado(null);
+      }
+
       setModalidadFacturacion(modalidadFacturacion?.modalidad_facturacion ?? null);
       setSubsidioExiste(subsidioExiste?.existe_subsidio ?? null);
 
@@ -53,7 +64,7 @@ const App: React.FC = () => {
       ) : mostrarResultados ? (
         <Resultados
           onVolver={() => setMostrarResultados(false)}
-          volumenFacturado={volumenFacturado}
+          ultimoVolumenFacturado={volumenFacturado}
           modalidadFacturacion={modalidadFacturacion}
           subsidioExiste={subsidioExiste}
           numeroConexion={numeroConexion}

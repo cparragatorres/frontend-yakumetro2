@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import GraficoBarras from "./GraficoBarras";
 import { obtenerConsumoMensual } from "../../services/consumoMensualService";
+import { VolumenFacturadoModels } from "../../models/VolumenFacturadoModels";
+import styles from './ConsumoSubsidio.module.css';
 
 interface ConsumoMensualProps {
   numeroConexion: string;  // Recibimos el número de conexión como prop
+  volumenFacturado: VolumenFacturadoModels | null;
 }
 
-const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
+const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion, volumenFacturado }) => {
   const [datosMensuales, setDatosMensuales] = useState<{ datosBarras: any[], datosLinea: any[] }>({
     datosBarras: [],
     datosLinea: []
@@ -53,6 +56,9 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
   const ultimoMes = datosMensuales.datosBarras.length > 0 ? datosMensuales.datosBarras[datosMensuales.datosBarras.length - 1] : null;
   const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
   const diferenciaDelUltimoMes = ultimoMes ? parseFloat((ultimoMes.consumo - ultimoMes.promedio).toFixed(2)) : null;
+  // Asegúrate de que volumenFacturado no sea null antes de intentar acceder a sus propiedades
+  const promedioVolumen = volumenFacturado ? volumenFacturado.promedio : null;
+  const diferenciaVolumenUltimoMes = volumenFacturado ? volumenFacturado.promedio - volumenFacturado.volumen_facturado : null;
 
   // Mensaje sobre el consumo y la comparación con el promedio
   const mensajeDinamico = (
@@ -62,29 +68,19 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
   );
 
   // Mensaje sobre si el usuario ahorró o no en el último mes
+  // Mensaje sobre si el usuario ahorró o no en el último mes
   const mensajeDinamico2 = (
     <>
       {diferenciaDelUltimoMes !== null ? (
-        diferenciaDelUltimoMes > 0 ?
-        (
-          // Si la diferencia es negativa, significa que el consumo fue mayor al promedio
+        diferenciaDelUltimoMes > 0 ? (
           <>Tu consumo en el último mes <strong>superó</strong> el promedio de los últimos 6 meses en <strong>{Math.abs(diferenciaDelUltimoMes)} soles</strong>.</>
-        )
-
-
-        : diferenciaDelUltimoMes < 0 ?
-
-        (
-          // Si la diferencia es positiva, significa que el consumo fue mayor que el promedio
-          <>¡Buen trabajo! Has ahorrado <strong>{Math.abs(diferenciaDelUltimoMes)} soles</strong> de consumo respecto al promedio de los últimos 6 meses.</>
-        )
-        :
-        (
-          // Si la diferencia es 0, significa que no hubo variación entre el consumo y el promedio
+        ) : diferenciaDelUltimoMes < 0 ? (
+          <>Has ahorrado <strong>{Math.abs(diferenciaVolumenUltimoMes!)} m³ </strong> lo cual significa un {diferenciaVolumenUltimoMes! > 0 ? "ahorro" : "gasto"} de <strong> S/{Math.abs(diferenciaDelUltimoMes)}</strong>.</>
+        ) : (
           <>Tu consumo en el último mes fue <strong>igual</strong> al promedio de los últimos 6 meses.</>
         )
       ) : (
-        <></>  // Si no hay datos, no mostramos nada
+        <></> // Si no hay datos, no mostramos nada
       )}
     </>
   );
@@ -107,22 +103,10 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion }) => {
         leyendaBarras="Consumo por Usuario"
         leyendaLinea="Promedio"
       />
+      <div className={styles.mensaje_dinamico}>{mensajeDinamico2}</div>
 
-      {/* Nuevo gráfico de barras con la diferencia entre consumo y promedio */}
-      <GraficoBarras
-        titulo="Diferencia entre el Consumo Mensual y el Promedio"
-        datosBarras={datosDiferencia}  // Usamos los datos de las diferencias calculadas
-        datosLinea={[]}  // Este gráfico no necesita la línea del promedio
-        colorBarras="#AEED00"
-        colorLinea="orange"
-        mensajeDinamico={mensajeDinamico2}
-        claveBarras="diferencia"  // Usamos la clave de diferencia calculada previamente
-        claveLinea=""
-        leyendaBarras="Diferencia"
-        leyendaLinea=""
-        domain={[-10, 10]}
-      />
     </div>
+
   );
 };
 

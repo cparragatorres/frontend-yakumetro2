@@ -1,4 +1,5 @@
 export interface VolumenFacturadoModels {
-  numero_conexion: string;
+  mes: string;
   volumen_facturado: number;
+  promedio: number;
 }

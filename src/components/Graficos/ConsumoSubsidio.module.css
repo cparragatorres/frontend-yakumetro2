@@ -8,3 +8,13 @@
   /* dar color al texto */
   color: #005DBA;
 }
+
+.mensaje_dinamico {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* dar color al texto */
+}

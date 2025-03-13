@@ -40,10 +40,10 @@ const Formulario: React.FC<{ onBuscar: (departamento: string, eps: string, numer
   // Acción al presionar "Buscar"
   const handleBuscar = () => {
     if (validarFormulario()) {
-      console.log("Búsqueda realizada con éxito");
-      console.log("Departamento:", departamento);
-      console.log("EPS:", eps);
-      console.log("Número de Conexión:", numeroConexion);
+      // console.log("Búsqueda realizada con éxito");
+      // console.log("Departamento:", departamento);
+      // console.log("EPS:", eps);
+      // console.log("Número de Conexión:", numeroConexion);
 
       onBuscar(departamento, eps, numeroConexion); // Ahora enviamos los datos a App.tsx
     }
