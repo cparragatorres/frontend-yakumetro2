@@ -12,6 +12,7 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
     datosBarras: [],
     datosLinea: []
   });
+  const [subsidios, setSubsidios] = useState<number[]>([]);  // Guardamos los subsidios como un array
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,11 +29,11 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
             consumo: item.consumo
           }));
 
-          // Verifica que los datos estén bien asignados para las barras y la línea
-          // console.log("🔵 Datos de Barras Subsidio (promedio):", datosBarras);
-          // console.log("🟠 Datos de Línea Subsidio (consumo):", datosLinea);
+          // Guardamos los subsidios en un array separado
+          const subsidiosArray = data.map(item => item.subsidio);
 
           setDatosSubsidio({ datosBarras, datosLinea });  // Guardamos ambos en el estado
+          setSubsidios(subsidiosArray);  // Guardamos los subsidios por separado
         } else {
           setError("No se pudieron obtener los datos de subsidio.");
         }
@@ -44,45 +45,57 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
   }, [numeroConexion]); // El efecto se ejecutará cada vez que cambie el número de conexión
 
   // Obtener el total de subsidio
-  const contadorSubsidio = datosSubsidio.datosBarras.reduce((total, item) => total + item.subsidio, 0);
+  const contadorSubsidio = subsidios.reduce((total, subsidio) => total + subsidio, 0);
 
   // Obtener los meses con subsidio
-  const mesesConSubsidio = datosSubsidio.datosBarras
-    .filter(item => item.subsidio === 1)
-    .map(item => item.mes);
+  const mesesConSubsidio = subsidios
+    .map((subsidio, index) => subsidio === 1 ? datosSubsidio.datosBarras[index].mes : null)
+    .filter(mes => mes !== null);
+
+
+
+  const ultimoMes = datosSubsidio.datosBarras.length > 0 ? datosSubsidio.datosBarras[datosSubsidio.datosBarras.length - 1] : null;
+  const comparacion = ultimoMes && ultimoMes.consumo > ultimoMes.promedio ? "mayor" : "menor";
+
+  // Mensaje dinámico con saltos de línea y palabras clave en negrita
+  const mensajeDinamico = (
+    <>
+      Tu consumo del <strong>último mes</strong> en m³
+      fue <strong>{comparacion}</strong> al <strong>promedio</strong> de
+      los últimos <strong>6 meses</strong>
+    </>
+  );
+
 
   // Crear el mensaje dinámico
-  let mensajeDinamico: React.ReactElement = <></>;
+  let mensajeDinamico2: React.ReactElement = <></>;
 
   if (contadorSubsidio === 0) {
-    mensajeDinamico = (
+    mensajeDinamico2 = (
       <>
-        No se registraron subsidios en los <strong>últimos 6 meses</strong>
+        {/* No mostrar nada */}
       </>
     );
   } else if (contadorSubsidio === 6) {
-    mensajeDinamico = (
+    mensajeDinamico2 = (
       <>
         Obtuviste subsidio durante los <strong>últimos 6 meses</strong>
       </>
     );
   } else if (contadorSubsidio === 1) {
-    mensajeDinamico = (
+    mensajeDinamico2 = (
       <>
         Tu subsidio fue registrado <strong>solo en el mes de {mesesConSubsidio[0]}</strong>
       </>
     );
   } else {
-    mensajeDinamico = (
+    mensajeDinamico2 = (
       <>
         Tu subsidio estuvo presente en los meses de:<br />
         <strong>{mesesConSubsidio.join(", ")}</strong>
       </>
     );
   }
-
-
-
 
   return (
     <div>
@@ -100,7 +113,7 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
         leyendaLinea="Volumen facturado del usuario"
       />
       <div className={styles.mensaje}>
-        {mensajeDinamico}
+        {mensajeDinamico2}
       </div>
     </div>
   );

@@ -49,8 +49,8 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
   // Mensaje dinámico con saltos de línea y palabras clave en negrita
   const mensajeDinamico = (
     <>
-      Tu <strong>último</strong> consumo fue<br />
-      <strong>{comparacion}</strong> que el <strong>promedio</strong><br />
+      Tu consumo fue
+      <strong>{comparacion}</strong> que el <strong>promedio </strong>
       de tu distrito en el <strong>último</strong> mes
     </>
   );

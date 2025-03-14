@@ -68,7 +68,6 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion, volumen
   );
 
   // Mensaje sobre si el usuario ahorró o no en el último mes
-  // Mensaje sobre si el usuario ahorró o no en el último mes
   const mensajeDinamico2 = (
     <>
       {diferenciaDelUltimoMes !== null ? (
