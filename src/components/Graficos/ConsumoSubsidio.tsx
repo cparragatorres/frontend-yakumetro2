@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import GraficoBarras from "./GraficoBarras";
 import { obtenerSubsidioMensual } from "../../services/subsidioMensualService";
 import styles from './ConsumoSubsidio.module.css';
 
@@ -20,16 +21,16 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
         if (data) {
           const datosBarras = data.map((item) => ({
             mes: item.mes,
-            subsidio: item.subsidio
+            promedio: item.promedio
           }));
           const datosLinea = data.map((item) => ({
             mes: item.mes,
-            subsidio: item.subsidio
+            consumo: item.consumo
           }));
 
           // Verifica que los datos estén bien asignados para las barras y la línea
-          // console.log("🔵 Datos de Barras (promedio):", datosBarras);
-          // console.log("🟠 Datos de Línea (consumo):", datosLinea);
+          // console.log("🔵 Datos de Barras Subsidio (promedio):", datosBarras);
+          // console.log("🟠 Datos de Línea Subsidio (consumo):", datosLinea);
 
           setDatosSubsidio({ datosBarras, datosLinea });  // Guardamos ambos en el estado
         } else {
@@ -80,9 +81,27 @@ const ConsumoSubsidio: React.FC<SubsidoMensualProps> = ({ numeroConexion }) => {
     );
   }
 
+
+
+
   return (
-    <div className={styles.mensaje}> {/* Mostrar el contenido de mensajeDinamico aquí */}
-      {mensajeDinamico}
+    <div>
+      {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
+      <GraficoBarras
+        titulo="Consumo de Subsidio"
+        datosBarras={datosSubsidio.datosBarras}
+        datosLinea={datosSubsidio.datosLinea}
+        colorBarras="#6DCEFE"
+        colorLinea="#FFA500"
+        mensajeDinamico={mensajeDinamico}
+        claveBarras="promedio"
+        claveLinea="consumo"
+        leyendaBarras="Volumen facturado de su distrito"
+        leyendaLinea="Volumen facturado del usuario"
+      />
+      <div className={styles.mensaje}>
+        {mensajeDinamico}
+      </div>
     </div>
   );
 };

@@ -20,8 +20,6 @@ const Resultados: React.FC<ResultadosProps> = ({
   subsidioExiste,
   numeroConexion,
 }) => {
-  console.log("ultimo volumen facturadossssss: ", ultimoVolumenFacturado?.volumen_facturado);
-
   return (
     <div className={styles.resultados}>
       <button className={styles.botonVolver} onClick={onVolver}>Volver</button>
@@ -50,7 +48,7 @@ const Resultados: React.FC<ResultadosProps> = ({
           numeroConexion={numeroConexion}
           volumenFacturado={ultimoVolumenFacturado}/>
         {/* <ConsumoMensualConDiferencia numeroConexion={numeroConexion}/> */}
-        {/* <ConsumoManzana /> */}
+        <ConsumoManzana numeroConexion={numeroConexion}/>
         <ConsumoDistrito numeroConexion={numeroConexion}/>
         <ConsumoSubsidio numeroConexion={numeroConexion} />
       </div>

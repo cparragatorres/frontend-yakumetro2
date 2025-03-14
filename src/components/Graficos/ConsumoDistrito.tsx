@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GraficoBarras from "./GraficoBarras";
 import { obtenerconsumoDistrito } from "../../services/consumoDistritoService";
-import { ConsumoDistritoModels } from "../../models/consumoDistritoModels";
 
 interface ConsumoDistritoProps {
   numeroConexion: string;  // Recibimos el número de conexión como prop
@@ -21,7 +20,7 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
           if (data) {
             const datosBarras = data.map((item) => ({
               mes: item.mes,
-              consumo: item.promedio
+              promedio: item.promedio
             }));
             const datosLinea = data.map((item) => ({
               mes: item.mes,
@@ -66,7 +65,7 @@ const ConsumoDistrito: React.FC<ConsumoDistritoProps> = ({ numeroConexion }) => 
         colorBarras="#F0C010"
         colorLinea="orange"
         mensajeDinamico={mensajeDinamico}
-        claveBarras="consumo"
+        claveBarras="promedio"
         claveLinea="consumo"
         leyendaBarras="Consumo Promedio de tu Distrito"
         leyendaLinea="Tu Consumo"

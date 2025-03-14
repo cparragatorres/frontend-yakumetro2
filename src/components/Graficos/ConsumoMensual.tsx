@@ -89,14 +89,12 @@ const ConsumoMensual: React.FC<ConsumoMensualProps> = ({ numeroConexion, volumen
   return (
     <div>
       {error && <div className="error">{error}</div>} {/* Mostramos el error si ocurre */}
-
-      {/* Gráfico de barras de consumo mensual */}
       <GraficoBarras
         titulo="Consumo Mensual"
         datosBarras={datosMensuales.datosBarras}
         datosLinea={datosMensuales.datosLinea}
         colorBarras="#005DBA"
-        colorLinea="orange"
+        colorLinea="#FFA500"
         mensajeDinamico={mensajeDinamico}
         claveBarras="consumo"
         claveLinea="promedio"
